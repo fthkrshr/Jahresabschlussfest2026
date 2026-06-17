@@ -1,0 +1,272 @@
+<!DOCTYPE html>
+<html lang="de">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+
+<title>Mitbringliste – 7. Klassen</title>
+
+<style>
+body {
+  font-family: Arial, sans-serif;
+  background: url('https://www.henssler.shop/cdn/shop/articles/Grillpartyplanen_ac7e7d0f-d18f-42e2-acee-89a433d4605f.png') no-repeat center center fixed;
+  background-size: cover;
+  margin: 0;
+  padding: 10px;
+  color: white;
+}
+
+.container {
+  max-width: 100%;
+}
+
+.header-box {
+  background: rgba(0,0,0,0.65);
+  padding: 15px;
+  border-radius: 12px;
+  text-align: center;
+}
+
+.header-box img {
+  width: 100%;
+  border-radius: 10px;
+  margin-top: 10px;
+}
+
+h1 {
+  font-size: 20px;
+  margin-bottom: 10px;
+}
+
+.details {
+  font-size: 14px;
+  margin-bottom: 10px;
+}
+
+.textbox {
+  background: rgba(0,0,0,0.5);
+  padding: 10px;
+  border-radius: 10px;
+  font-size: 14px;
+  margin-top: 10px;
+  line-height: 1.5;
+}
+
+.card {
+  background: rgba(255,255,255,0.95);
+  color: black;
+  padding: 15px;
+  margin-top: 15px;
+  border-radius: 12px;
+}
+
+input, select {
+  width: 100%;
+  padding: 12px;
+  margin: 6px 0;
+  border-radius: 8px;
+  border: 1px solid #ccc;
+  font-size: 16px;
+}
+
+button {
+  width: 100%;
+  padding: 12px;
+  font-size: 16px;
+  background: #0078d4;
+  color: white;
+  border: none;
+  border-radius: 8px;
+  cursor: pointer;
+}
+
+.entry {
+  display: flex;
+  flex-direction: column;
+  background: #f9f9f9;
+  padding: 10px;
+  margin: 6px 0;
+  border-radius: 8px;
+}
+
+.entry-buttons {
+  margin-top: 5px;
+}
+
+.entry-buttons button {
+  width: auto;
+  margin-right: 5px;
+  padding: 6px 10px;
+  font-size: 14px;
+}
+
+.stats span {
+  display: inline-block;
+  margin: 4px;
+  padding: 6px 10px;
+  border-radius: 8px;
+  color: white;
+}
+
+.green { background: #28a745; }
+.orange { background: #ff9800; }
+.red { background: #e53935; }
+</style>
+
+</head>
+
+<body>
+
+<div class="container">
+
+<div class="header-box">
+  <h1>🎉 Mitbringliste für das Jahresabschlussfest mit Grillen der 7. Klassen</h1>
+
+  <div class="details">
+    📅 Dienstag, 07.07.2026<br>
+    🕒 11 – ca. 14 Uhr<br>
+    📍 Wolfgang-Borchert-Schule
+  </div>
+
+  <!-- ✅ HIER WAR DER FEHLER -->
+  https://www.henssler.shop/cdn/shop/articles/Grillpartyplanen_ac7e7d0f-d18f-42e2-acee-89a433d4605f.png
+
+  <div class="textbox">
+    Liebe Schülerinnen und Schüler der Klasse 7,<br><br>
+    mit unserem Abschlussfest und dem gemeinsamen Grillen möchten wir euer erfolgreiches erstes Jahr zelebrieren.<br><br>
+    Wir würden uns sehr freuen, wenn jeder/jede etwas mitbringt und wir ein großes gemeinsames Büffet aufstellen mit 
+    Salaten, Aufstrichen, verschiedenen Broten, Getränken usw.
+  </div>
+</div>
+
+<div class="card">
+
+<input id="name" placeholder="Name">
+
+<select id="klasse">
+  <option>7a</option>
+  <option>7b</option>
+  <option>7c</option>
+  <option>7d</option>
+  <option>7e</option>
+  <option>7f</option>
+  <option>7g</option>
+  <option>T7</option>
+</select>
+
+<input id="essen" placeholder="Was bringst du mit?">
+
+<select id="anzahl">
+  <option value="">Personen</option>
+</select>
+
+<button onclick="addEntry()">Eintragen</button>
+
+</div>
+
+<div class="card">
+<h3>Beiträge</h3>
+<div id="liste"></div>
+
+<h3>Übersicht</h3>
+<div id="stats" class="stats"></div>
+</div>
+
+</div>
+
+<script>
+// Personen Dropdown 1–20
+for (let i = 1; i <= 20; i++) {
+  let opt = document.createElement("option");
+  opt.text = i;
+  document.getElementById("anzahl").add(opt);
+}
+</script>
+
+<script type="module">
+
+import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
+import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
+
+const firebaseConfig = {
+  apiKey: "AIzaSyDGLqZK7lEqvvjqtFpEN2sqEsLU7WLTe1E",
+  authDomain: "abschlussfest-7-mitbringliste.firebaseapp.com",
+  projectId: "abschlussfest-7-mitbringliste"
+};
+
+const app = initializeApp(firebaseConfig);
+const db = getFirestore(app);
+const colRef = collection(db, "mitbringliste");
+
+window.addEntry = async function() {
+  await addDoc(colRef, {
+    name: name.value,
+    klasse: klasse.value,
+    essen: essen.value,
+    anzahl: anzahl.value
+  });
+
+  name.value = "";
+  essen.value = "";
+  anzahl.value = "";
+};
+
+window.deleteEntry = async function(id) {
+  await deleteDoc(doc(db, "mitbringliste", id));
+};
+
+window.editEntry = async function(id, current) {
+  const neu = prompt("Neuer Beitrag:", current);
+  if (neu) {
+    await updateDoc(doc(db, "mitbringliste", id), {
+      essen: neu
+    });
+  }
+};
+
+onSnapshot(colRef, (snapshot) => {
+  const liste = document.getElementById("liste");
+  const statsDiv = document.getElementById("stats");
+
+  liste.innerHTML = "";
+  statsDiv.innerHTML = "";
+
+  let count = {};
+
+  snapshot.forEach(docSnap => {
+    const d = docSnap.data();
+
+    count[d.essen] = (count[d.essen] || 0) + 1;
+
+    let div = document.createElement("div");
+    div.className = "entry";
+
+    div.innerHTML = `
+      <span>• ${d.name} (${d.klasse})</span>
+      <span>${d.essen} (für ${d.anzahl})</span>
+      <div class="entry-buttons">
+        <button onclick="editEntry('${docSnap.id}', '${d.essen}')">✏️</button>
+        <button onclick="deleteEntry('${docSnap.id}')">🗑️</button>
+      </div>
+    `;
+
+    liste.appendChild(div);
+  });
+
+  for (let item in count) {
+    let color = "green";
+    if (count[item] >= 3) color = "red";
+    else if (count[item] == 2) color = "orange";
+
+    let span = document.createElement("span");
+    span.className = color;
+    span.textContent = `${item}: ${count[item]}x`;
+
+    statsDiv.appendChild(span);
+  }
+});
+
+</script>
+
+</body>
+</html>
