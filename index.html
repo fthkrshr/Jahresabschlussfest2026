@@ -4,60 +4,65 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Mitbringliste – 7. Klassen</title>
+<title>Mitbringliste Jahresabschlussfest mit Grillen – 7. Klassen</title>
 
 <style>
 body {
   font-family: Arial, sans-serif;
-  background: url('https://www.henssler.shop/cdn/shop/articles/Grillpartyplanen_ac7e7d0f-d18f-42e2-acee-89a433d4605f.png') no-repeat center center fixed;
-  background-size: cover;
   margin: 0;
   padding: 10px;
-  color: white;
+  background: #f4f6f8;
 }
 
-.container {
-  max-width: 100%;
-}
-
-.header-box {
-  background: rgba(0,0,0,0.65);
-  padding: 15px;
+/* HERO */
+.header-hero {
+  position: relative;
   border-radius: 12px;
-  text-align: center;
+  overflow: hidden;
+  margin-bottom: 15px;
 }
 
-.header-box img {
+.header-hero img {
   width: 100%;
-  border-radius: 10px;
-  margin-top: 10px;
+  height: 240px;
+  object-fit: cover;
 }
 
-h1 {
-  font-size: 20px;
-  margin-bottom: 10px;
+.header-overlay {
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.6);
+  color: white;
+  padding: 15px;
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+}
+
+.header-overlay h1 {
+  font-size: 18px;
+  margin-bottom: 8px;
 }
 
 .details {
-  font-size: 14px;
-  margin-bottom: 10px;
+  font-size: 13px;
+  margin-bottom: 8px;
 }
 
 .textbox {
+  font-size: 12px;
+  line-height: 1.4;
   background: rgba(0,0,0,0.5);
-  padding: 10px;
-  border-radius: 10px;
-  font-size: 14px;
-  margin-top: 10px;
-  line-height: 1.5;
+  padding: 8px;
+  border-radius: 8px;
 }
 
+/* CARD */
 .card {
-  background: rgba(255,255,255,0.95);
-  color: black;
+  background: white;
   padding: 15px;
-  margin-top: 15px;
   border-radius: 12px;
+  margin-bottom: 15px;
 }
 
 input, select {
@@ -77,7 +82,6 @@ button {
   color: white;
   border: none;
   border-radius: 8px;
-  cursor: pointer;
 }
 
 .entry {
@@ -100,6 +104,7 @@ button {
   font-size: 14px;
 }
 
+/* STATS */
 .stats span {
   display: inline-block;
   margin: 4px;
@@ -117,28 +122,31 @@ button {
 
 <body>
 
-<div class="container">
+<!-- HERO -->
+<div class="header-hero">
 
-<div class="header-box">
-  <h1>🎉 Mitbringliste für das Jahresabschlussfest mit Grillen der 7. Klassen</h1>
+  <img src="https://www.henssler.shop/cdn/shop/articles/Grillpartyplanen_ac7e7d0f-d18f-42e2-acee-89a433d4605f.png">
 
-  <div class="details">
-    📅 Dienstag, 07.07.2026<br>
-    🕒 11 – ca. 14 Uhr<br>
-    📍 Wolfgang-Borchert-Schule
+  <div class="header-overlay">
+    <h1>🎉 Mitbringliste für das Jahresabschlussfest mit Grillen der 7. Klassen</h1>
+
+    <div class="details">
+      📅 Dienstag, 07.07.2026<br>
+      🕒 11 – ca. 14 Uhr<br>
+      📍 Wolfgang-Borchert-Schule
+    </div>
+
+    <div class="textbox">
+      Liebe Schülerinnen und Schüler der Klasse 7,<br><br>
+      mit unserem Abschlussfest und dem gemeinsamen Grillen möchten wir euer erfolgreiches erstes Jahr zelebrieren.<br><br>
+      Wir würden uns sehr freuen, wenn jeder/jede etwas mitbringt und wir ein großes gemeinsames Büffet aufstellen mit 
+      Salaten, Aufstrichen, verschiedenen Broten, Getränken usw.
+    </div>
   </div>
 
-  <!-- ✅ HIER WAR DER FEHLER -->
-  https://www.henssler.shop/cdn/shop/articles/Grillpartyplanen_ac7e7d0f-d18f-42e2-acee-89a433d4605f.png
-
-  <div class="textbox">
-    Liebe Schülerinnen und Schüler der Klasse 7,<br><br>
-    mit unserem Abschlussfest und dem gemeinsamen Grillen möchten wir euer erfolgreiches erstes Jahr zelebrieren.<br><br>
-    Wir würden uns sehr freuen, wenn jeder/jede etwas mitbringt und wir ein großes gemeinsames Büffet aufstellen mit 
-    Salaten, Aufstrichen, verschiedenen Broten, Getränken usw.
-  </div>
 </div>
 
+<!-- FORM -->
 <div class="card">
 
 <input id="name" placeholder="Name">
@@ -164,6 +172,7 @@ button {
 
 </div>
 
+<!-- LIST -->
 <div class="card">
 <h3>Beiträge</h3>
 <div id="liste"></div>
@@ -172,14 +181,12 @@ button {
 <div id="stats" class="stats"></div>
 </div>
 
-</div>
-
 <script>
-// Personen Dropdown 1–20
+// Dropdown 1-20
 for (let i = 1; i <= 20; i++) {
   let opt = document.createElement("option");
   opt.text = i;
-  document.getElementById("anzahl").add(opt);
+  anzahl.add(opt);
 }
 </script>
 
