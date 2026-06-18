@@ -4,23 +4,23 @@
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 
-<title>Mitbringliste Jahresabschlussfest mit Grillen – 7. Klassen</title>
+<title>Mitbringliste – 7. Klassen</title>
 
 <style>
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  padding: 10px;
   background: #f4f6f8;
-  display: flex;
-  justify-content: center;
-}
-.container {
-  width: 100%;
-  max-width: 770px;
 }
 
-/* HERO */
+/* ✅ ZENTRIERTER CONTAINER */
+.wrapper {
+  max-width: 800px;
+  margin: auto;
+  padding: 10px;
+}
+
+/* ✅ HERO */
 .header-hero {
   position: relative;
   border-radius: 12px;
@@ -30,15 +30,15 @@ body {
 
 .header-hero img {
   width: 100%;
-  height: 240px;
+  height: 220px;
   object-fit: cover;
 }
 
 .header-overlay {
   position: absolute;
   inset: 0;
-  background: rgb(255 255 255 / 55%);
-  color: black;
+  background: rgba(0,0,0,0.6);
+  color: white;
   padding: 15px;
   display: flex;
   flex-direction: column;
@@ -47,24 +47,22 @@ body {
 
 .header-overlay h1 {
   font-size: 18px;
-  margin-bottom: 8px;
+  margin-bottom: 10px;
 }
 
 .details {
   font-size: 13px;
-  margin-bottom: 8px;
-  margin-left: 40px;
+  margin-bottom: 10px;
 }
 
 .textbox {
-  font-size: 12px;
-  line-height: 1.4;
-  background: rgb(255 255 255 / 30%);
+  background: rgba(0,0,0,0.5);
   padding: 8px;
   border-radius: 8px;
+  font-size: 12px;
 }
 
-/* CARD */
+/* ✅ CARD */
 .card {
   background: white;
   padding: 15px;
@@ -89,11 +87,11 @@ button {
   color: white;
   border: none;
   border-radius: 8px;
+  cursor: pointer;
 }
 
+/* ✅ LISTE */
 .entry {
-  display: flex;
-  flex-direction: column;
   background: #f9f9f9;
   padding: 10px;
   margin: 6px 0;
@@ -111,7 +109,7 @@ button {
   font-size: 14px;
 }
 
-/* STATS */
+/* ✅ STATS */
 .stats span {
   display: inline-block;
   margin: 4px;
@@ -129,9 +127,10 @@ button {
 
 <body>
 
-<!-- HERO -->
-<div class="header-hero">
+<div class="wrapper">
 
+<!-- HEADER -->
+<div class="header-hero">
   <img src="https://www.henssler.shop/cdn/shop/articles/Grillpartyplanen_ac7e7d0f-d18f-42e2-acee-89a433d4605f.png">
 
   <div class="header-overlay">
@@ -140,19 +139,15 @@ button {
     <div class="details">
       📅 Dienstag, 07.07.2026<br>
       🕒 11 – ca. 14 Uhr<br>
-      📍 Schulhof der Wolfgang-Borchert-Schule
+      📍 Wolfgang-Borchert-Schule
     </div>
 
     <div class="textbox">
       Liebe Schülerinnen und Schüler der Klasse 7,<br><br>
-      mit unserem Abschlussfest und dem gemeinsamen Grillen möchten wir euer erfolgreiches erstes Jahr zelebrieren.<br>
-      Wir würden uns sehr freuen, wenn jeder/jede etwas mitbringt und wir ein großes gemeinsames Büffet aufstellen mit 
-      Salaten, Aufstrichen, verschiedenen Broten, Getränken usw.<br>
-      Wir freuen uns drauf!<br>
-      -Klassenleitungen der 7. Klassen-
+      mit unserem Abschlussfest und dem gemeinsamen Grillen möchten wir euer erfolgreiches erstes Jahr zelebrieren.<br><br>
+      Wir würden uns sehr freuen, wenn jeder/jede etwas mitbringt und wir ein großes gemeinsames Büffet aufstellen.
     </div>
   </div>
-
 </div>
 
 <!-- FORM -->
@@ -181,7 +176,7 @@ button {
 
 </div>
 
-<!-- LIST -->
+<!-- LISTE -->
 <div class="card">
 <h3>Beiträge</h3>
 <div id="liste"></div>
@@ -190,12 +185,14 @@ button {
 <div id="stats" class="stats"></div>
 </div>
 
+</div>
+
 <script>
-// Dropdown 1-20
+// Dropdown
 for (let i = 1; i <= 20; i++) {
   let opt = document.createElement("option");
   opt.text = i;
-  anzahl.add(opt);
+  document.getElementById("anzahl").add(opt);
 }
 </script>
 
@@ -214,23 +211,21 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const colRef = collection(db, "mitbringliste");
 
+/* ✅ FIXED BUTTON */
 window.addEntry = async function() {
 
-  const nameInput = document.getElementById("name").value;
-  const klasseInput = document.getElementById("klasse").value;
-  const essenInput = document.getElementById("essen").value;
-  const anzahlInput = document.getElementById("anzahl").value;
+  const name = document.getElementById("name").value;
+  const klasse = document.getElementById("klasse").value;
+  const essen = document.getElementById("essen").value;
+  const anzahl = document.getElementById("anzahl").value;
 
-  if (!nameInput || !essenInput || !anzahlInput) {
+  if (!name || !essen || !anzahl) {
     alert("Bitte alle Felder ausfüllen!");
     return;
   }
 
   await addDoc(colRef, {
-    name: nameInput,
-    klasse: klasseInput,
-    essen: essenInput,
-    anzahl: anzahlInput
+    name, klasse, essen, anzahl
   });
 
   document.getElementById("name").value = "";
@@ -269,8 +264,7 @@ onSnapshot(colRef, (snapshot) => {
     div.className = "entry";
 
     div.innerHTML = `
-      <span>• ${d.name} (${d.klasse})</span>
-      <span>${d.essen} (für ${d.anzahl})</span>
+      • ${d.name} (${d.klasse}) – ${d.essen} (für ${d.anzahl})
       <div class="entry-buttons">
         <button onclick="editEntry('${docSnap.id}', '${d.essen}')">✏️</button>
         <button onclick="deleteEntry('${docSnap.id}')">🗑️</button>
