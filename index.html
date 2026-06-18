@@ -10,112 +10,153 @@
 body {
   font-family: Arial, sans-serif;
   margin: 0;
-  background: #f4f6f8;
+  padding: 0;
+  /* ✅ Titelbild als fixer, abgedunkelter Hintergrund */
+  background: linear-gradient(rgba(0, 0, 0, 0.75), rgba(0, 0, 0, 0.75)), 
+              url('https://www.henssler.shop/cdn/shop/articles/Grillpartyplanen_ac7e7d0f-d18f-42e2-acee-89a433d4605f.png') no-repeat center center fixed;
+  background-size: cover;
+  min-height: 100vh;
 }
 
 /* ✅ ZENTRIERTER CONTAINER */
 .wrapper {
   max-width: 800px;
   margin: auto;
-  padding: 10px;
+  padding: 15px;
+  box-sizing: border-box;
 }
 
-/* ✅ HERO */
+/* ✅ HERO AREA (Flexibel für alle Bildschirme) */
 .header-hero {
-  position: relative;
+  background: rgba(30, 30, 30, 0.85);
   border-radius: 12px;
   overflow: hidden;
   margin-bottom: 15px;
+  box-shadow: 0 4px 15px rgba(0,0,0,0.3);
+  display: flex;
+  flex-direction: column;
 }
 
 .header-hero img {
   width: 100%;
-  height: 220px;
+  height: 200px;
   object-fit: cover;
 }
 
 .header-overlay {
-  position: absolute;
-  inset: 0;
-  background: rgba(0,0,0,0.6);
   color: white;
-  padding: 15px;
+  padding: 20px;
   display: flex;
   flex-direction: column;
   justify-content: center;
 }
 
 .header-overlay h1 {
-  font-size: 18px;
-  margin-bottom: 10px;
+  font-size: clamp(18px, 4vw, 24px); /* Skaliert dynamisch zwischen 18px und 24px */
+  margin-top: 0;
+  margin-bottom: 12px;
+  line-height: 1.3;
 }
 
 .details {
-  font-size: 13px;
-  margin-bottom: 10px;
+  font-size: 14px;
+  margin-bottom: 15px;
+  line-height: 1.5;
+  background: rgba(255, 255, 255, 0.1);
+  padding: 10px;
+  border-radius: 8px;
 }
 
 .textbox {
-  background: rgba(0,0,0,0.5);
-  padding: 8px;
+  background: rgba(0,0,0,0.4);
+  padding: 12px;
   border-radius: 8px;
-  font-size: 12px;
+  font-size: 13px;
+  line-height: 1.5;
 }
 
-/* ✅ CARD */
+/* ✅ CARDS */
 .card {
-  background: white;
-  padding: 15px;
+  background: rgba(255, 255, 255, 0.95);
+  padding: 20px;
   border-radius: 12px;
   margin-bottom: 15px;
+  box-shadow: 0 4px 10px rgba(0,0,0,0.2);
+  box-sizing: border-box;
+}
+
+.card h3 {
+  margin-top: 0;
 }
 
 input, select {
   width: 100%;
   padding: 12px;
-  margin: 6px 0;
+  margin: 8px 0;
   border-radius: 8px;
   border: 1px solid #ccc;
   font-size: 16px;
+  box-sizing: border-box; /* Verhindert, dass Felder über den Rand ragen */
 }
 
 button {
   width: 100%;
-  padding: 12px;
+  padding: 14px;
   font-size: 16px;
   background: #0078d4;
   color: white;
   border: none;
   border-radius: 8px;
   cursor: pointer;
+  font-weight: bold;
+  transition: background 0.2s;
+}
+
+button:hover {
+  background: #005a9e;
 }
 
 /* ✅ LISTE */
 .entry {
-  background: #f9f9f9;
-  padding: 10px;
-  margin: 6px 0;
+  background: #f8f9fa;
+  padding: 12px;
+  margin: 8px 0;
   border-radius: 8px;
+  border-left: 4px solid #0078d4;
+  font-size: 15px;
 }
 
 .entry-buttons {
-  margin-top: 5px;
+  margin-top: 8px;
 }
 
 .entry-buttons button {
   width: auto;
-  margin-right: 5px;
-  padding: 6px 10px;
+  margin-right: 6px;
+  padding: 6px 12px;
   font-size: 14px;
+  background: #e1dfdd;
+  color: #323130;
+}
+
+.entry-buttons button:hover {
+  background: #c8c6c4;
 }
 
 /* ✅ STATS */
+.stats {
+  display: flex;
+  flex-wrap: wrap; /* Lässt Elemente auf Smartphones umbrechen */
+  gap: 6px;
+}
+
 .stats span {
   display: inline-block;
-  margin: 4px;
-  padding: 6px 10px;
+  padding: 6px 12px;
   border-radius: 8px;
   color: white;
+  font-size: 14px;
+  font-weight: bold;
 }
 
 .green { background: #28a745; }
@@ -129,75 +170,71 @@ button {
 
 <div class="wrapper">
 
-<!-- HEADER -->
-<div class="header-hero">
-  <img src="https://www.henssler.shop/cdn/shop/articles/Grillpartyplanen_ac7e7d0f-d18f-42e2-acee-89a433d4605f.png">
+  <div class="header-hero">
+    <img src="https://www.henssler.shop/cdn/shop/articles/Grillpartyplanen_ac7e7d0f-d18f-42e2-acee-89a433d4605f.png" alt="Grillparty">
 
-  <div class="header-overlay">
-    <h1>🎉 Mitbringliste für das Jahresabschlussfest mit Grillen der 7. Klassen</h1>
+    <div class="header-overlay">
+      <h1>🎉 Mitbringliste für das Jahresabschlussfest mit Grillen der 7. Klassen</h1>
 
-    <div class="details">
-      📅 Dienstag, 07.07.2026<br>
-      🕒 11 – ca. 14 Uhr<br>
-      📍 Wolfgang-Borchert-Schule
-    </div>
+      <div class="details">
+        📅 <strong>Dienstag, 07.07.2026</strong><br>
+        🕒 11 – ca. 14 Uhr<br>
+        📍 Wolfgang-Borchert-Schule
+      </div>
 
-    <div class="textbox">
-      Liebe Schülerinnen und Schüler der Klasse 7,<br><br>
-      mit unserem Abschlussfest und dem gemeinsamen Grillen möchten wir euer erfolgreiches erstes Jahr zelebrieren.<br><br>
-      Wir würden uns sehr freuen, wenn jeder/jede etwas mitbringt und wir ein großes gemeinsames Büffet aufstellen.
+      <div class="textbox">
+        Liebe Schülerinnen und Schüler der Klasse 7,<br><br>
+        mit unserem Abschlussfest und dem gemeinsamen Grillen möchten wir euer erfolgreiches erstes Jahr zelebrieren.<br><br>
+        Wir würden uns sehr freuen, wenn jeder/jede etwas mitbringt und wir ein großes gemeinsames Büffet aufstellen.
+      </div>
     </div>
   </div>
-</div>
 
-<!-- FORM -->
-<div class="card">
+  <div class="card">
+    <input id="name" placeholder="Wie lautet dein Name?">
 
-<input id="name" placeholder="Wie lautet dein Name?">
+    <select id="klasse">
+      <option>7a</option>
+      <option>7b</option>
+      <option>7c</option>
+      <option>7d</option>
+      <option>7e</option>
+      <option>7f</option>
+      <option>7g</option>
+      <option>T7</option>
+    </select>
 
-<select id="klasse">
-  <option>7a</option>
-  <option>7b</option>
-  <option>7c</option>
-  <option>7d</option>
-  <option>7e</option>
-  <option>7f</option>
-  <option>7g</option>
-  <option>T7</option>
-</select>
+    <input id="essen" placeholder="Was bringst du mit?">
 
-<input id="essen" placeholder="Was bringst du mit?">
+    <select id="anzahl">
+      <option value="">Für wie viele Personen reicht es?</option>
+    </select>
 
-<select id="anzahl">
-  <option value="">Personen</option>
-</select>
+    <button onclick="addEntry()">Eintragen</button>
+  </div>
 
-<button onclick="addEntry()">Eintragen</button>
+  <div class="card">
+    <h3>Beiträge</h3>
+    <div id="liste"></div>
 
-</div>
-
-<!-- LISTE -->
-<div class="card">
-<h3>Beiträge</h3>
-<div id="liste"></div>
-
-<h3>Übersicht</h3>
-<div id="stats" class="stats"></div>
-</div>
+    <h3 style="margin-top: 20px;">Übersicht</h3>
+    <div id="stats" class="stats"></div>
+  </div>
 
 </div>
 
 <script>
-// Dropdown
+// Dropdown dynamisch befüllen
+const anzahlSelect = document.getElementById("anzahl");
 for (let i = 1; i <= 20; i++) {
   let opt = document.createElement("option");
+  opt.value = i;
   opt.text = i;
-  document.getElementById("anzahl").add(opt);
+  anzahlSelect.add(opt);
 }
 </script>
 
 <script type="module">
-
 import { initializeApp } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-app.js";
 import { getFirestore, collection, addDoc, onSnapshot, deleteDoc, doc, updateDoc } from "https://www.gstatic.com/firebasejs/10.12.0/firebase-firestore.js";
 
@@ -211,12 +248,10 @@ const app = initializeApp(firebaseConfig);
 const db = getFirestore(app);
 const colRef = collection(db, "mitbringliste");
 
-/* ✅ FIXED BUTTON */
 window.addEntry = async function() {
-
-  const name = document.getElementById("name").value;
+  const name = document.getElementById("name").value.trim();
   const klasse = document.getElementById("klasse").value;
-  const essen = document.getElementById("essen").value;
+  const essen = document.getElementById("essen").value.trim();
   const anzahl = document.getElementById("anzahl").value;
 
   if (!name || !essen || !anzahl) {
@@ -224,9 +259,7 @@ window.addEntry = async function() {
     return;
   }
 
-  await addDoc(colRef, {
-    name, klasse, essen, anzahl
-  });
+  await addDoc(colRef, { name, klasse, essen, anzahl });
 
   document.getElementById("name").value = "";
   document.getElementById("essen").value = "";
@@ -234,14 +267,16 @@ window.addEntry = async function() {
 };
 
 window.deleteEntry = async function(id) {
-  await deleteDoc(doc(db, "mitbringliste", id));
+  if(confirm("Möchtest du diesen Eintrag wirklich löschen?")) {
+    await deleteDoc(doc(db, "mitbringliste", id));
+  }
 };
 
 window.editEntry = async function(id, current) {
   const neu = prompt("Neuer Beitrag:", current);
-  if (neu) {
+  if (neu && neu.trim() !== "") {
     await updateDoc(doc(db, "mitbringliste", id), {
-      essen: neu
+      essen: neu.trim()
     });
   }
 };
@@ -257,20 +292,18 @@ onSnapshot(colRef, (snapshot) => {
 
   snapshot.forEach(docSnap => {
     const d = docSnap.data();
-
     count[d.essen] = (count[d.essen] || 0) + 1;
 
     let div = document.createElement("div");
     div.className = "entry";
 
     div.innerHTML = `
-      • ${d.name} (${d.klasse}) – ${d.essen} (für ${d.anzahl})
+      <strong>${d.name} (${d.klasse})</strong> – ${d.essen} <small style="color:#666;">(für ${d.anzahl} Pers.)</small>
       <div class="entry-buttons">
-        <button onclick="editEntry('${docSnap.id}', '${d.essen}')">✏️</button>
-        <button onclick="deleteEntry('${docSnap.id}')">🗑️</button>
+        <button onclick="editEntry('${docSnap.id}', '${d.essen}')">✏️ Bearbeiten</button>
+        <button onclick="deleteEntry('${docSnap.id}')">🗑️ Löschen</button>
       </div>
     `;
-
     liste.appendChild(div);
   });
 
@@ -286,7 +319,6 @@ onSnapshot(colRef, (snapshot) => {
     statsDiv.appendChild(span);
   }
 });
-
 </script>
 
 </body>
