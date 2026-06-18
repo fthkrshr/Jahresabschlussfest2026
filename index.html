@@ -12,6 +12,13 @@ body {
   margin: 0;
   padding: 10px;
   background: #f4f6f8;
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
+.container {
+  width: 100%;
+  max-width: 770px;
 }
 
 /* HERO */
@@ -209,16 +216,27 @@ const db = getFirestore(app);
 const colRef = collection(db, "mitbringliste");
 
 window.addEntry = async function() {
+
+  const nameInput = document.getElementById("name").value;
+  const klasseInput = document.getElementById("klasse").value;
+  const essenInput = document.getElementById("essen").value;
+  const anzahlInput = document.getElementById("anzahl").value;
+
+  if (!nameInput || !essenInput || !anzahlInput) {
+    alert("Bitte alle Felder ausfüllen!");
+    return;
+  }
+
   await addDoc(colRef, {
-    name: name.value,
-    klasse: klasse.value,
-    essen: essen.value,
-    anzahl: anzahl.value
+    name: nameInput,
+    klasse: klasseInput,
+    essen: essenInput,
+    anzahl: anzahlInput
   });
 
-  name.value = "";
-  essen.value = "";
-  anzahl.value = "";
+  document.getElementById("name").value = "";
+  document.getElementById("essen").value = "";
+  document.getElementById("anzahl").value = "";
 };
 
 window.deleteEntry = async function(id) {
